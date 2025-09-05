@@ -1,8 +1,8 @@
 # vCard - Personal portfolio
 
-![GitHub repo size](https://img.shields.io/github/repo-size/codewithsadee/portfolio-website)
-![GitHub stars](https://img.shields.io/github/stars/codewithsadee/portfolio-website?style=social)
-![GitHub forks](https://img.shields.io/github/forks/codewithsadee/portfolio-website?style=social)
+![GitHub repo size](https://img.shields.io/github/repo-size/Minipliy/portfolio-website)
+![GitHub stars](https://img.shields.io/github/stars/Minipliy/portfolio-website?style=social)
+![GitHub forks](https://img.shields.io/github/forks/Minipliy/portfolio-website?style=social)
 [![Twitter Follow](https://img.shields.io/twitter/follow/Minipliy_?style=social)](https://twitter.com/intent/follow?screen_name=codewithsadee_)
 
 
