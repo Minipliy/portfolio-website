@@ -1,24 +1,22 @@
-vCard - Personal Portfolio
-
 # sidebar
 
 alt = Richard hanrick
-Richard hanrick
-Web developer
+Lukas Hammer
+Student & Junior Developer
 
 Show Contacts
 
 Email
-richard@example.com
+lukas@minipliy.net
 
 Phone
-+1 (213) 352-2795
++49 178 1280573
 
 Birthday
-June 23, 1982
+December 18, 2008
 
 Location
-Sacramento, California, USA
+Dresden, Saxony, Germany
 
 # navbar
 
@@ -32,10 +30,9 @@ Contact
 
 About me
 
-I'm Creative Director and UI/UX Designer from Sydney, Australia, working in web development and print media. I enjoy turning complex problems into simple, beautiful and intuitive designs.
+I'm Lukas, a high school student from Dresden and an early student at TU Dresden, where I study computer science alongside school. I’m passionate about technology, coding, and constantly learning new skills that help me grow as a developer.  
 
-My job is to build your website so that it is functional and user-friendly but at the same time attractive. Moreover, I add personal touch to your product and make sure that is eye-catching and easy to use. My aim is to bring across your message and identity in the most creative way. I created web design for many famous brand companies.
-
+My goal is to create projects that are not only functional but also clean and easy to use. I like solving problems step by step and turning ideas into something real. With my curiosity and reliability, I want to keep improving and one day work as a professional developer.
 
 ## service
 

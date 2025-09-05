@@ -58,7 +58,7 @@ overlay.addEventListener("click", testimonialsModalFunc);
 // custom select variables
 const select = document.querySelector("[data-select]");
 const selectItems = document.querySelectorAll("[data-select-item]");
-const selectValue = document.querySelector("[data-selecct-value]");
+const selectValue = document.querySelector("[data-select-value]");
 const filterBtn = document.querySelectorAll("[data-filter-btn]");
 
 select.addEventListener("click", function () { elementToggleFunc(this); });
@@ -84,7 +84,7 @@ const filterFunc = function (selectedValue) {
 
     if (selectedValue === "all") {
       filterItems[i].classList.add("active");
-    } else if (selectedValue === filterItems[i].dataset.category) {
+    } else if (selectedValue === filterItems[i].dataset.category.toLowerCase()) {
       filterItems[i].classList.add("active");
     } else {
       filterItems[i].classList.remove("active");
@@ -115,6 +115,15 @@ for (let i = 0; i < filterBtn.length; i++) {
 
 
 
+// EmailJS Initialisierung
+(function() {
+    emailjs.init("1gig0Ol7GeTpW5PIk");
+})();
+
+// Globale Variablen für Spam-Schutz
+let lastSubmitTime = 0;
+const MIN_SUBMIT_INTERVAL = 30000; // 30 Sekunden
+
 // contact form variables
 const form = document.querySelector("[data-form]");
 const formInputs = document.querySelectorAll("[data-form-input]");
@@ -131,6 +140,78 @@ for (let i = 0; i < formInputs.length; i++) {
       formBtn.setAttribute("disabled", "");
     }
 
+  });
+}
+
+// EmailJS Form Handler mit Spam-Schutz und reCAPTCHA
+if (form) {
+  form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      // Honeypot-Check (falls vorhanden)
+      const honeypot = form.querySelector('input[name="honeypot"]');
+      if (honeypot && honeypot.value !== '') {
+          console.log('Spam attempt blocked');
+          return;
+      }
+      
+      // Zeit-Check
+      const now = Date.now();
+      if (now - lastSubmitTime < MIN_SUBMIT_INTERVAL) {
+          alert('Bitte warten Sie 30 Sekunden zwischen den Nachrichten.');
+          return;
+      }
+      
+      const submitBtn = this.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.innerHTML = 'Verifying...';
+      submitBtn.disabled = true;
+      
+      // reCAPTCHA v3 ausführen
+      grecaptcha.execute('6LcqT74rAAAAADwt2yvwxgFN_-1ksTmXRs2iT_c2', {action: 'contact_form'}).then(function(token) {
+          
+          // CAPTCHA Token zum Formular hinzufügen
+          let tokenInput = form.querySelector('input[name="recaptcha_token"]');
+          if (!tokenInput) {
+              tokenInput = document.createElement('input');
+              tokenInput.type = 'hidden';
+              tokenInput.name = 'recaptcha_token';
+              form.appendChild(tokenInput);
+          }
+          tokenInput.value = token;
+          
+          submitBtn.innerHTML = 'Sending...';
+          
+          // Email senden
+          emailjs.sendForm(
+              'service_5s1sojx',
+              'template_krdmg6t',
+              form
+          )
+          .then(function() {
+              alert('Nachricht erfolgreich gesendet!');
+              form.reset();
+              lastSubmitTime = now;
+              formBtn.setAttribute("disabled", "");
+          })
+          .catch(function(error) {
+              alert('Fehler beim Senden: ' + error.text);
+              console.error('EmailJS Error:', error);
+          })
+          .finally(function() {
+              submitBtn.innerHTML = originalText;
+              submitBtn.disabled = false;
+              // Token entfernen
+              if (tokenInput && tokenInput.parentNode) {
+                  tokenInput.parentNode.removeChild(tokenInput);
+              }
+          });
+      }).catch(function(error) {
+          console.error('reCAPTCHA Error:', error);
+          alert('Sicherheitsprüfung fehlgeschlagen. Bitte versuchen Sie es erneut.');
+          submitBtn.innerHTML = originalText;
+          submitBtn.disabled = false;
+      });
   });
 }
 
