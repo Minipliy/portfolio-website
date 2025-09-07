@@ -1,8 +1,8 @@
 # Website template - Personal portfolio
 
-![GitHub repo size](https://img.shields.io/github/repo-size/Minipliy/portfolio-website-template)
-![GitHub stars](https://img.shields.io/github/stars/Minipliy/portfolio-website-template?style=social)
-![GitHub forks](https://img.shields.io/github/forks/Minipliy/portfolio-website-template?style=social)
+![GitHub repo size](https://img.shields.io/github/repo-size/Minipliy/portfolio-website)
+![GitHub stars](https://img.shields.io/github/stars/Minipliy/portfolio-website?style=social)
+![GitHub forks](https://img.shields.io/github/forks/Minipliy/portfolio-website?style=social)
 
 
 A modern, fully responsive personal portfolio template built with HTML, CSS, and JavaScript. Optimized for all devices and easy to customize.
@@ -25,13 +25,13 @@ To install this **website template** , follow these steps:
 Linux and macOS:
 
 ```bash
-sudo git clone https://github.com/Minipliy/portfolio-website-template.git
+sudo git clone https://github.com/Minipliy/portfolio-website.git
 ```
 
 Windows:
 
 ```bash
-git clone https://github.com/Minipliy/portfolio-website-template.git
+git clone https://github.com/Minipliy/portfolio-website.git
 ```
 
 ## License
