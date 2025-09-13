@@ -143,72 +143,47 @@ for (let i = 0; i < formInputs.length; i++) {
   });
 }
 
-// EmailJS Form Handler mit Spam-Schutz und reCAPTCHA
+// EmailJS Form Handler mit Spam-Schutz
 if (form) {
   form.addEventListener('submit', function(event) {
       event.preventDefault();
-      
+
       // Honeypot-Check (falls vorhanden)
       const honeypot = form.querySelector('input[name="honeypot"]');
       if (honeypot && honeypot.value !== '') {
           console.log('Spam attempt blocked');
           return;
       }
-      
+
       // Zeit-Check
       const now = Date.now();
       if (now - lastSubmitTime < MIN_SUBMIT_INTERVAL) {
           alert('Bitte warten Sie 30 Sekunden zwischen den Nachrichten.');
           return;
       }
-      
+
       const submitBtn = this.querySelector('button[type="submit"]');
       const originalText = submitBtn.innerHTML;
-      submitBtn.innerHTML = 'Verifying...';
+      submitBtn.innerHTML = 'Sending...';
       submitBtn.disabled = true;
-      
-      // reCAPTCHA v3 ausführen
-      grecaptcha.execute('6LcqT74rAAAAADwt2yvwxgFN_-1ksTmXRs2iT_c2', {action: 'contact_form'}).then(function(token) {
-          
-          // CAPTCHA Token zum Formular hinzufügen
-          let tokenInput = form.querySelector('input[name="recaptcha_token"]');
-          if (!tokenInput) {
-              tokenInput = document.createElement('input');
-              tokenInput.type = 'hidden';
-              tokenInput.name = 'recaptcha_token';
-              form.appendChild(tokenInput);
-          }
-          tokenInput.value = token;
-          
-          submitBtn.innerHTML = 'Sending...';
-          
-          // Email senden
-          emailjs.sendForm(
-              'service_5s1sojx',
-              'template_krdmg6t',
-              form
-          )
-          .then(function() {
-              alert('Nachricht erfolgreich gesendet!');
-              form.reset();
-              lastSubmitTime = now;
-              formBtn.setAttribute("disabled", "");
-          })
-          .catch(function(error) {
-              alert('Fehler beim Senden: ' + error.text);
-              console.error('EmailJS Error:', error);
-          })
-          .finally(function() {
-              submitBtn.innerHTML = originalText;
-              submitBtn.disabled = false;
-              // Token entfernen
-              if (tokenInput && tokenInput.parentNode) {
-                  tokenInput.parentNode.removeChild(tokenInput);
-              }
-          });
-      }).catch(function(error) {
-          console.error('reCAPTCHA Error:', error);
-          alert('Sicherheitsprüfung fehlgeschlagen. Bitte versuchen Sie es erneut.');
+
+      // Email senden
+      emailjs.sendForm(
+          'service_5s1sojx',
+          'template_krdmg6t',
+          form
+      )
+      .then(function() {
+          alert('Nachricht erfolgreich gesendet!');
+          form.reset();
+          lastSubmitTime = now;
+          formBtn.setAttribute("disabled", "");
+      })
+      .catch(function(error) {
+          alert('Fehler beim Senden: ' + error.text);
+          console.error('EmailJS Error:', error);
+      })
+      .finally(function() {
           submitBtn.innerHTML = originalText;
           submitBtn.disabled = false;
       });
